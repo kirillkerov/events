@@ -6,7 +6,6 @@ use App\Http\Requests\Event\StoreRequest;
 use App\Http\Requests\Event\UpdateRequest;
 use App\Http\Resources\Event\EventResource;
 use App\Models\Event;
-use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
