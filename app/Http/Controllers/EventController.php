@@ -14,7 +14,7 @@ class EventController extends Controller
         return inertia('Event/Index', [
             'title' => 'События',
             'events' => EventResource::collection(Event::orderBy('id', 'DESC')->get())->resolve(), // каждый event запрашивает своего user
-//            'events' => Event::with('user')->orderBy('id', 'DESC')->get(), // один общий запрос к users
+//            'events' => Event::with('user')->orderBy('id', 'DESC')->get(), // один общий запрос к users ?
         ]);
     }
 
