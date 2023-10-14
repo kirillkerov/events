@@ -9,19 +9,12 @@ use App\Models\Event;
 
 class EventController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('event.owner')->only(['edit', 'update', 'delete']);
-    }
-
     public function index()
     {
-//        а вот так было бы меньше запросов если повторяются user
-//        мб сделать EventWithUserResource?
-//        'events' => Event::with('user')->orderBy('id', 'DESC')->get(),
         return inertia('Event/Index', [
             'title' => 'События',
-            'events' => EventResource::collection(Event::orderBy('id', 'DESC')->get())->resolve(),
+            'events' => EventResource::collection(Event::orderBy('id', 'DESC')->get())->resolve(), // каждый event запрашивает своего user
+//            'events' => Event::with('user')->orderBy('id', 'DESC')->get(), // один общий запрос к users
         ]);
     }
 
@@ -48,19 +41,31 @@ class EventController extends Controller
 
     public function edit(Event $event)
     {
+        if ($event->user_id != auth()->user()->id) {
+            abort(403);
+        }
+
         return inertia('Event/Edit', [
-            'event' => $event,
+            'event' => new EventResource($event),
         ]);
     }
 
     public function update(Event $event, UpdateRequest $request)
     {
+        if ($event->user_id != auth()->user()->id) {
+            abort(403);
+        }
+
         $event->update($request->validated());
         return redirect()->route('event.index');
     }
 
     public function delete(Event $event)
     {
+        if ($event->user_id != auth()->user()->id) {
+            abort(403);
+        }
+
         $event->delete();
         return redirect()->route('event.index');
     }

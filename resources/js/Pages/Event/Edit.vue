@@ -2,6 +2,7 @@
 import {Head, router, usePage} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {reactive} from "vue";
+import EventsBreadcrumbs from "@/Components/EventsBreadcrumbs.vue";
 
 defineProps({
     event: {
@@ -16,6 +17,20 @@ const form = reactive({
     description: event.description,
 })
 
+const breadcrumbs = [
+    {
+        'label': 'События',
+        'route': route('event.index'),
+    },
+    {
+        'label': event.name,
+        'route': route('event.show', event.id),
+    },
+    {
+        'label': 'Редактировать',
+    },
+]
+
 function update() {
     router.patch(route('event.update', event.id), form)
 }
@@ -25,11 +40,9 @@ function update() {
     <Head title="Edit Event" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Events / Edit</h2>
-        </template>
+        <EventsBreadcrumbs :items="breadcrumbs"/>
 
-        <div class="py-12">
+        <div class="my-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">

@@ -3,12 +3,25 @@ import {Head, usePage} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Link} from "@inertiajs/vue3";
 import UserLink from "@/Components/UserLink.vue";
+import EventsBreadcrumbs from "@/Components/EventsBreadcrumbs.vue";
 
 defineProps({
     event: {
         type: Array
     },
 });
+
+const event = usePage().props.event;
+
+const breadcrumbs = [
+    {
+        'label': 'События',
+        'route': route('event.index'),
+    },
+    {
+        'label': event.name,
+    },
+]
 
 const user = usePage().props.auth.user;
 </script>
@@ -17,11 +30,9 @@ const user = usePage().props.auth.user;
     <Head title="Events" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Event / Show</h2>
-        </template>
+        <EventsBreadcrumbs :items="breadcrumbs"/>
 
-        <div class="py-12">
+        <div class="my-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">

@@ -33,7 +33,7 @@ const showingNavigationDropdown = ref(false);
                                     Главная
                                 </NavLink>
 
-                                <NavLink :href="route('event.index')" :active="route().current('event.index')">
+                                <NavLink :href="route('event.index')" :active="route().current('event.*')">
                                     События
                                 </NavLink>
                             </div>
@@ -149,13 +149,6 @@ const showingNavigationDropdown = ref(false);
                     </div>
                 </div>
             </nav>
-
-            <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
 
             <!-- Page Content -->
             <main>

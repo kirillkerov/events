@@ -3,6 +3,7 @@ import {Head} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Link} from "@inertiajs/vue3";
 import UserLink from "@/Components/UserLink.vue";
+import EventsBreadcrumbs from "@/Components/EventsBreadcrumbs.vue";
 
 defineProps({
     events: {
@@ -10,19 +11,16 @@ defineProps({
     },
     title: {
         type: String
-    }
+    },
 });
+
 </script>
 
 <template>
     <Head :title=title />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Events</h2>
-        </template>
-
-        <div class="py-12">
+        <div class="my-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">

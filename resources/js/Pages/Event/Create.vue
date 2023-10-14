@@ -2,6 +2,7 @@
 import {Head, router} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {reactive} from "vue";
+import EventsBreadcrumbs from "@/Components/EventsBreadcrumbs.vue";
 
 defineProps({
     errors: {
@@ -14,6 +15,17 @@ const form = reactive({
     description: null,
 })
 
+const breadcrumbs = [
+    {
+        'label': 'События',
+        'route': route('event.index'),
+    },
+    {
+        'label': 'Создать',
+        'route': route('event.create'),
+    },
+]
+
 function submit() {
     router.post(route('event.store'), form)
 }
@@ -23,11 +35,9 @@ function submit() {
     <Head title="Create Event" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Events / Create</h2>
-        </template>
+        <EventsBreadcrumbs :items="breadcrumbs"/>
 
-        <div class="py-12">
+        <div class="my-4">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
