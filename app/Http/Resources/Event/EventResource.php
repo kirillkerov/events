@@ -15,14 +15,11 @@ class EventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $user = new UserResource($this->user);
-        $user::withoutWrapping();
-
         return [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'user' => $user,
+            'user' => UserResource::make($this->user)->resolve(),
             'created' => $this->created_at->diffForHumans(),
         ];
     }

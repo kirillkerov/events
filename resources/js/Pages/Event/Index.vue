@@ -1,9 +1,8 @@
 <script setup>
-import {Head} from "@inertiajs/vue3";
+import {Head, usePage} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Link} from "@inertiajs/vue3";
 import UserLink from "@/Components/UserLink.vue";
-import EventsBreadcrumbs from "@/Components/EventsBreadcrumbs.vue";
 
 defineProps({
     events: {
@@ -12,6 +11,11 @@ defineProps({
     title: {
         type: String
     },
+});
+
+// Uncaught TypeError: Cannot read properties of undefined (reading 'unshift')
+Echo.channel('store_event').listen('.store_event', (e) => {
+    usePage().props.events.unshift(e.event);
 });
 
 </script>

@@ -7,7 +7,7 @@ import EventsBreadcrumbs from "@/Components/EventsBreadcrumbs.vue";
 
 defineProps({
     event: {
-        type: Array
+        type: Object
     },
 });
 

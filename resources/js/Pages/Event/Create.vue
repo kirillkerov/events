@@ -6,7 +6,7 @@ import EventsBreadcrumbs from "@/Components/EventsBreadcrumbs.vue";
 
 defineProps({
     errors: {
-        type: Array
+        type: Object
     }
 });
 
@@ -27,7 +27,11 @@ const breadcrumbs = [
 ]
 
 function submit() {
-    router.post(route('event.store'), form)
+    router.post(route('event.store'), form, {
+        headers: {
+            'X-Socket-ID': Echo.socketId(),
+        },
+    })
 }
 </script>
 

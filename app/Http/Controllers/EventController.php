@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StoreEventEvent;
 use App\Http\Requests\Event\StoreRequest;
 use App\Http\Requests\Event\UpdateRequest;
 use App\Http\Resources\Event\EventResource;
@@ -27,7 +28,9 @@ class EventController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
-        Event::create($data);
+        $event = Event::create($data);
+
+        broadcast(new StoreEventEvent($event))->toOthers();
 
         return redirect()->route('event.index');
     }
@@ -35,7 +38,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         return inertia('Event/Show', [
-            'event' => new EventResource($event),
+            'event' => EventResource::make($event)->resolve(),
         ]);
     }
 
@@ -46,7 +49,7 @@ class EventController extends Controller
         }
 
         return inertia('Event/Edit', [
-            'event' => new EventResource($event),
+            'event' => EventResource::make($event)->resolve(),
         ]);
     }
 
