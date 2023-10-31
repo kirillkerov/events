@@ -2,39 +2,36 @@
 
 namespace App\Events;
 
-use App\Http\Resources\Event\EventResource;
 use App\Models\Event;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StoreEventEvent implements ShouldBroadcast
+class EventStored implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private Event $event;
+    private int $eventId;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Event $event)
+    public function __construct(int $eventId)
     {
-        $this->event = $event;
+        $this->eventId = $eventId;
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
+     * @return array<int, Channel>
      */
     public function broadcastOn(): array
     {
         return [
-            new Channel('store_event'),
+            new Channel('delete_event'),
         ];
     }
 
@@ -43,7 +40,7 @@ class StoreEventEvent implements ShouldBroadcast
      */
     public function broadcastAs(): string
     {
-        return 'store_event';
+        return 'delete_event';
     }
 
     /**
@@ -54,7 +51,7 @@ class StoreEventEvent implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'event' => EventResource::make($this->event)->resolve(),
+            'event_id' => $this->eventId,
         ];
     }
 }

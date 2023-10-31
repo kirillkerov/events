@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use Illuminate\Http\Request;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 class HomeController extends Controller
 {
-    public function __invoke()
+    /**
+     * @return Response|ResponseFactory
+     */
+    public function __invoke(): Response|ResponseFactory
     {
         return inertia('Home', [
             'title' => 'Главная',

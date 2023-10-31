@@ -13,9 +13,12 @@ defineProps({
     },
 });
 
-// Uncaught TypeError: Cannot read properties of undefined (reading 'unshift')
 Echo.channel('store_event').listen('.store_event', (e) => {
     usePage().props.events.unshift(e.event);
+});
+
+Echo.channel('delete_event').listen('.delete_event', (e) => {
+    usePage().props.events = usePage().props.events.filter(n => n.id !== e.event_id);
 });
 
 </script>

@@ -12,6 +12,7 @@ defineProps({
 });
 
 const event = usePage().props.event;
+const socketId = Echo.socketId();
 
 const breadcrumbs = [
     {
@@ -52,7 +53,7 @@ const user = usePage().props.auth.user;
 
                             <div v-if="event.user.id === user.id" class="w-full flex justify-end text-xs gap-4">
                                 <Link :href="route('event.edit', event.id)" class="text-sky-700 hover:text-sky-500">Редактировать</Link>
-                                <Link :href="route('event.delete', event.id)" class="text-red-700 hover:text-red-500">Удалить</Link>
+                                <Link :href="route('event.delete', event.id)" :headers="{ 'X-Socket-ID': socketId }" class="text-red-700 hover:text-red-500">Удалить</Link>
                             </div>
                         </article>
                     </div>
