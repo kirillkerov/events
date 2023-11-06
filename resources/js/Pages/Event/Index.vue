@@ -1,7 +1,6 @@
 <script setup>
-import {Head, usePage} from "@inertiajs/vue3";
+import {Head, Link, usePage} from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import {Link} from "@inertiajs/vue3";
 import UserLink from "@/Components/UserLink.vue";
 
 defineProps({
@@ -18,10 +17,8 @@ Echo.channel('store_event').listen('.store_event', (e) => {
 });
 
 Echo.channel('delete_event').listen('.delete_event', (e) => {
-    const index = usePage().props.events.findIndex(event => event.id === e.event_id);
-    if (index !== -1) {
-        usePage().props.events.splice(index, 1);
-    }
+    const events = usePage().props.events;
+    usePage().props.events = events.filter(event => event.id !== e.event_id);
 });
 
 </script>
