@@ -18,7 +18,10 @@ Echo.channel('store_event').listen('.store_event', (e) => {
 
 Echo.channel('delete_event').listen('.delete_event', (e) => {
     const events = usePage().props.events;
-    usePage().props.events = events.filter(event => event.id !== e.event_id);
+    const index = events.findIndex(event => event.id === e.event_id);
+    if (index !== -1) {
+        events.splice(index, 1);
+    }
 });
 
 </script>
